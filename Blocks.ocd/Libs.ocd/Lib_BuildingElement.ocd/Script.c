@@ -360,3 +360,10 @@ func GetRightY(int y)
 	
 	return build_offset_y + y + off;
 }
+
+func SaveScenarioObject(props)
+{
+	if (!inherited(props, ...)) return false;
+	if (is_constructed) props->AddCall("Constructed", this, "Constructed");
+	return true;
+}
