@@ -118,6 +118,10 @@ private func CheckBurningObjects()
 		var fire_amount = obj->OnFire();
 		total_fire_value += fire_amount * fuel_value / 100;
 	}
+	
+	if (GetMaterialVal("Incendiary", "Material", GetMaterial(0, RandomX(build_grid_y, 5 * build_grid_y))))
+		total_fire_value += 10;
+	
 	DoSteam(total_fire_value);
 }
 
