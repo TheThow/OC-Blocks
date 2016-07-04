@@ -9,7 +9,7 @@
 // Root node of the conveyor network.
 local root;
 
-// List of targets, keyed on object number for fast manipulation.
+// List of targets
 local targets; 
 
 public func Create(object root)
