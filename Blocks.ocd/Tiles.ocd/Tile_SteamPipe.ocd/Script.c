@@ -106,6 +106,9 @@ public func Destroy()
 {
 	if (pressure_valve)
 		pressure_valve->RemoveObject();
+	var platform = FindObject(Find_AtPoint(), Find_Property("IsMovingBlockBuildingTile"), Find_Func("IsRoot"));
+	if (platform)
+		platform->Destroy();
 	return inherited();
 }
 
