@@ -26,16 +26,6 @@ public func Destruction()
 	CreateParticle("Smoke", 0, 0, PV_Random(-5, 5), PV_Random(-5, 5), PV_Random(0, 10), particles, 40);
 }
 
-static const ConveyorPathOps = new AStarOps
-{
-	distance = ObjectDistance,
-
-	successors = func(object node)
-	{
-		return node->GetNeighbours();
-	}
-};
-
 static const ConveyorDiscoveryOps = new ConveyorPathOps
 {
 	// overwrite these
@@ -70,7 +60,7 @@ local MoveEffect = new Effect
 			if (!this.current_target || !this.current_target->IsNeighbour(this.current_block))
 			{
 				// Recalculate a new path to the final target.
-				this.path = AStar(this.current_block, this.final_target, ConveyorPathOps);
+				this.path = this.current_block->FindPath(this.final_target);
 				if (this.path)
 				{
 					this.current_target = this.path[1];
