@@ -15,6 +15,8 @@ local Plane = 15;
 local IsConveyorBuildingTile = true;
 local TileKindPropertyName = "IsConveyorBuildingTile"; 
 
+local network;
+
 protected func Hit(x, y)
 {
 	StonyObjectHit(x,y);
@@ -23,15 +25,64 @@ protected func Hit(x, y)
 
 func Constructed()
 {
-	_inherited();
+	inherited(...);
+
+	if (neighbour_count == 0)
+		network = ConveyorNetwork->Create(this);
+	else
+		// Connect to existing networks.
+		for (var neighbour in neighbours_as_list)
+			if (neighbour)
+			{
+				if (!network)
+					network = neighbour.network;
+				else
+					network->Merge(neighbour.network);
+			}
 	
 	AddTimer("CheckObjects", 60 + Random(20));
 }
 
 public func Destruct()
 {
+	inherited(...);
+
+	// Network management
+	if (neighbour_count == 0)
+		// We were the last node of the network.
+		network->RemoveObject();
+	else if (neighbour_count > 1)
+		// We potentially have disconnected two or more networks.
+		for (var neighbour in neighbours_as_list)
+			if (neighbour)
+				network->Split(neighbour);
+
 	RemoveTimer("CheckObjects");
-	return inherited(...);
+}
+
+// Recursively updates the network.
+public func SetNetwork(object new_network, object previous_network)
+{
+	if (network != previous_network) return;
+	network = new_network;
+	for (var neighbour in neighbours_as_list)
+		if (neighbour)
+			neighbour->SetNetwork(new_network, previous_network);
+}
+
+static const ConveyorPathOps = new AStarOps
+{
+	distance = ObjectDistance,
+
+	successors = func(object node)
+	{
+		return node->GetNeighbours();
+	}
+};
+
+public func FindPath(object other)
+{
+	return AStar(this, other, ConveyorPathOps);
 }
 
 private func CheckObjects()

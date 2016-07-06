@@ -25,6 +25,7 @@ func InitializePlayer(iPlr)
 	obj->CreateContents(Tile_Conveyor)->SetStackCount(999);
 	obj->CreateContents(Tile_SteamPipe)->SetStackCount(999);
 	obj->CreateContents(Tile_SteamPipeValve)->SetStackCount(999);
+	obj->CreateContents(Tile_MovingBlock)->SetStackCount(999);
 	obj->CreateContents(Pickaxe, 5);
 	obj->CreateContents(Shovel, 5);
 	obj->CreateContents(Dynamite, 50);
