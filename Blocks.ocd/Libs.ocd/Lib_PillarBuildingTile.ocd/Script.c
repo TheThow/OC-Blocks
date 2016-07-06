@@ -23,19 +23,24 @@ func Constructed()
 	return _inherited();
 }
 
-func BuildingCondition()
+func BuildingCondition(bool crucial)
 {
-	if (FindObject(Find_Not(Find_Func("IsPreview")), Find_NoContainer(), Find_AtPoint(), Find_Func("IsPillarBuildingTile"), Find_Exclude(this)))
-		return false;
-
 	if (VerticesStuckSemi() == GetVertexNum()+1)
 		return false;
+
+	if(!crucial)
+	{
+		if (FindObject(Find_Not(Find_Func("IsPreview")), Find_NoContainer(), Find_AtPoint(), Find_Func("IsPillarBuildingTile"), Find_Exclude(this)))
+			return false;
+		
+		if (FindObject(Find_AtPoint(0, tile_size_y), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Or(Find_Func("IsSolidBuildingTile"), Find_Func("IsPillarBuildingTile"))) 
+			|| GBackSolid(0, (tile_size_y)))
+			return true;
+		
+		return false;
+	}
 	
-	if (FindObject(Find_AtPoint(0, tile_size_y), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Or(Find_Func("IsSolidBuildingTile"), Find_Func("IsPillarBuildingTile"))) 
-		|| GBackSolid(0, (tile_size_y)))
-		return true;
-	
-	return false;
+	return true;
 }
 
 func Destruct()
@@ -90,12 +95,4 @@ public func OnBecomeUnstable()
 		}
 		position_y -= build_grid_y;
 	}
-}
-
-func SpecialPreviewCondition()
-{
-	if (VerticesStuckSemi() == GetVertexNum()+1)
-		return false;
-	
-	return _inherited();
 }

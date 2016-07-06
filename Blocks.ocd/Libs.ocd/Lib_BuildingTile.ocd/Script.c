@@ -47,6 +47,11 @@ func OnHitByPickaxe()
 	Destruct();
 }
 
+func BuildingCondition(bool crucial)
+{
+	return _inherited();
+}
+
 func PreviewBuildingCondition()
 {
 	this.already_found = true;
@@ -89,7 +94,7 @@ func PreviewBuildingCondition()
 		if (o) o.already_found = nil;
 	}
 	
-	if (!SpecialPreviewCondition())
+	if (!BuildingCondition(true))
 		flag = false;
 	
 	this.preview_buffer = flag;

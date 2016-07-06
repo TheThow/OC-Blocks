@@ -82,27 +82,24 @@ func RemoveSupport()
 }
 
 
-func BuildingCondition()
-{
-	if (FindObject(Find_AtPoint(), Find_NoContainer(), Find_Func("IsPlatformBuildingTile"), Find_Not(Find_Func("IsPreview")), Find_Exclude(this)))
-		return false;
-
-	if (VerticesStuckSemi() == GetVertexNum()+1)
-		return false;
-
-	if (FindObject(Find_OnLine(-tile_size_x/2-1, 0, tile_size_x/2+1, 0),
-		Find_Exclude(this), Find_Property("is_constructed"), Find_Or(Find_Func("IsSolidBuildingTile"), Find_Func("IsPlatformBuildingTile"))))
-		return true;
-	
-	return false;
-}
-
-func SpecialPreviewCondition()
+func BuildingCondition(bool crucial)
 {
 	if (VerticesStuckSemi() == GetVertexNum()+1)
 		return false;
+
+	if(!crucial)
+	{
+		if (FindObject(Find_AtPoint(), Find_NoContainer(), Find_Func("IsPlatformBuildingTile"), Find_Not(Find_Func("IsPreview")), Find_Exclude(this)))
+			return false;
 	
-	return _inherited();
+		if (FindObject(Find_OnLine(-tile_size_x/2-1, 0, tile_size_x/2+1, 0),
+			Find_Exclude(this), Find_Property("is_constructed"), Find_Or(Find_Func("IsSolidBuildingTile"), Find_Func("IsPlatformBuildingTile"))))
+			return true;
+		
+		return false;
+	}
+	
+	return true;
 }
 
 private func Destroy()

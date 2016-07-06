@@ -36,7 +36,7 @@ func CheckPlatforms()
 }
 
 
-func BuildingCondition()
+func BuildingCondition(bool crucial)
 {
 	if (VerticesStuckSemi() == GetVertexNum()+1)
 		return false;
@@ -49,33 +49,22 @@ func BuildingCondition()
 		Find_Not(Find_Func("IsWallBuildingTile"))))
 		return false;
 
-	if ((GBackSolid(-(tile_size_x), 0) || GBackSolid(tile_size_x, 0) || GBackSolid(0, (tile_size_y)) || GBackSolid(0,-(tile_size_y))))
-		return true;
+	if(!crucial)
+	{
+		if ((GBackSolid(-(tile_size_x), 0) || GBackSolid(tile_size_x, 0) || GBackSolid(0, (tile_size_y)) || GBackSolid(0,-(tile_size_y))))
+			return true;
+		
+		if (FindObject(Find_Or(Find_OnLine(-tile_size_x/2-1, 0, tile_size_x/2+1, 0), Find_OnLine(0, -tile_size_y/2-1, 0, tile_size_y/2+2)), 
+			Find_Exclude(this), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Func("IsSolidBuildingTile")))
+			return true;
+		
+		if (FindObject(Find_AtPoint(0, tile_size_y), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Func("IsPillarBuildingTile")))
+			return true;
 	
-	if (FindObject(Find_Or(Find_OnLine(-tile_size_x/2-1, 0, tile_size_x/2+1, 0), Find_OnLine(0, -tile_size_y/2-1, 0, tile_size_y/2+2)), 
-		Find_Exclude(this), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Func("IsSolidBuildingTile")))
-		return true;
-	
-	if (FindObject(Find_AtPoint(0, tile_size_y), Find_NoContainer(), Find_Not(Find_Func("IsPreview")), Find_Func("IsPillarBuildingTile")))
-		return true;
-	
-	return false;
-}
-
-func SpecialPreviewCondition()
-{
-	if (VerticesStuckSemi() == GetVertexNum()+1)
 		return false;
+	}
 	
-	if (FindObject(Find_AtRect(-tile_size_x/2, -tile_size_y/2, tile_size_x, tile_size_y), 
-		Find_Exclude(this),
-		Find_NoContainer(), 
-		Find_Not(Find_Category(C4D_Object)),
-		Find_Not(Find_Func("IsPreview")), 
-		Find_Not(Find_Func("IsWallBuildingTile"))))
-		return false;
-	
-	return _inherited();
+	return true;
 }
 
 func Destruct()
