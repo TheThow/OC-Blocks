@@ -69,6 +69,21 @@ private func UpdateTargets()
 	}
 }
 
+public func DiscoverTarget(object from, object payload)
+{
+	// Find the closest target which accepts our payload.
+	var target = nil, min_dist = LandscapeWidth() + LandscapeHeight(), d;
+	for (var t in targets)
+	{
+		if (t->AcceptConveyorPayload(payload) && (d = ObjectDistance(from, t)) < min_dist)
+		{
+			target = t;
+			min_dist = d;
+		}
+	}
+	return target;
+}
+
 func SaveScenarioObject(props)
 {
 	// Don't save - the conveyor tiles automatically create a new one.

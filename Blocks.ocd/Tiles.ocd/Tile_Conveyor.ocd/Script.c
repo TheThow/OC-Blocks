@@ -105,11 +105,5 @@ private func BeginTransport(object obj)
 	base.home_block = this;
 }
 
-public func IsTarget(object origin, object payload)
-{
-	if (FindObject(Find_OnLine(0, 0, 0, 40), Find_ID(Lorry), Find_PathFree(this))) return true;
-	return false;
-}
-
 local Components = {Wood = 1};
 public func IsToolProduct() { return true; }

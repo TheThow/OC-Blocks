@@ -7,10 +7,13 @@
 	@author Luchs
 */
 
-local conveyor_network;
+local conveyor_tile, conveyor_network;
 
 local IsConveyorTarget = true;
 public func IsConnectedToConveyor() { return conveyor_network != nil; }
+
+// Override me!
+public func AcceptConveyorPayload(object payload) { return false; }
 
 private func FindConveyor(int range)
 {
@@ -21,8 +24,8 @@ private func FindConveyor(int range)
 protected func DiscoverConveyor()
 {
 	// TODO: Proper constant for the collection range
-	var conveyor = FindConveyor(40);
-	var network = conveyor && conveyor.network;
+	conveyor_tile = FindConveyor(40);
+	var network = conveyor_tile && conveyor_tile.network;
 	if (network != conveyor_network)
 	{
 		if (conveyor_network)
