@@ -1,0 +1,2 @@
+Name=Wall Reinforcement
+Description=With this you can reinforce two adjacent blocks.

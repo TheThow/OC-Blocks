@@ -1,0 +1,2 @@
+Name=Wandverstärkung
+Description=Hiermit können zwei nebeneinanderliegende Steine verstärkt werden.

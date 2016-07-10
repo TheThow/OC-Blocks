@@ -1,0 +1,14 @@
+[DefCore]
+id=WallReinforcement
+Version=6,0
+Category=C4D_Object
+Width=9
+Height=15
+Offset=-5,-8
+Vertices=3
+VertexX=0,0,0
+VertexY=0,-5,5
+VertexFriction=30,30,30
+Value=5
+Mass=6
+Rotate=1
