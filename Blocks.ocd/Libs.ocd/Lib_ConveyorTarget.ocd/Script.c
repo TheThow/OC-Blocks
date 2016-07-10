@@ -24,6 +24,12 @@ public func HasConveyorPayload(id payload)
 	return FindObject(Find_Container(this), Find_ID(payload));
 }
 
+// Returns an array of all possible payloads, with optional Find_* criteria.
+public func GetConveyorPayloads(search_criteria)
+{
+	return FindObjects(Find_Container(this), search_criteria);
+}
+
 /* END functions to override */
 
 private func FindConveyor(int range)

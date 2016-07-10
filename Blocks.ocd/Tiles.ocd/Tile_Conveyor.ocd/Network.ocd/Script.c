@@ -103,6 +103,19 @@ public func RequestObject(object target, id payload)
 	return false;
 }
 
+// Returns an array of all possible payloads.
+public func GetPayloads(search_criteria)
+{
+	var payloads = [], i = 0;
+	for (var t in targets)
+	{
+		var objs = t->GetConveyorPayloads(search_criteria);
+		payloads[i:] = objs;
+		i += GetLength(objs);
+	}
+	return payloads;
+}
+
 func SaveScenarioObject(props)
 {
 	// Don't save - the conveyor tiles automatically create a new one.

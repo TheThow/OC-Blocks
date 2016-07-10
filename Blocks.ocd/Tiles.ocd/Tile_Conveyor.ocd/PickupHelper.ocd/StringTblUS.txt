@@ -1,0 +1,2 @@
+Name=Conveyor
+Description=Enables you to pick up objects from the conveyor.

@@ -1,0 +1,2 @@
+Name=Fließband
+Description=Erlaubt das Bestellen von Objekten vom Fließband

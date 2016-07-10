@@ -1,0 +1,8 @@
+[DefCore]
+id=Conveyor_PickupHelper
+Version=5,2,0,1
+Category=0
+Width=10
+Height=10
+Offset=-4,-4
+Picture=0,0,64,64
