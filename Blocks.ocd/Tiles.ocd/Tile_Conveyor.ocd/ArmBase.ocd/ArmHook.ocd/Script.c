@@ -6,6 +6,8 @@ local target;
 local length;
 local start_y;
 
+local retract_fx;
+
 local MovingEffect = new Effect
 {
 	Timer = func (int time)
@@ -45,6 +47,8 @@ local RetractEffect = new Effect
 	{
 		if (this.payload_fx)
 			RemoveEffect(nil, nil, this.payload_fx);
+		if (this.was_collectible != nil)
+			this.payload.Collectible = this.was_collectible;
 	},
 	
 	Timer = func (int time)
@@ -54,16 +58,23 @@ local RetractEffect = new Effect
 		if (this_y != target_y)
 			this.Target->SetPosition(this.Target.base->GetX(), this_y + BoundBy(target_y - this_y, -2, 2));
 		else
-		if (!this.payload || this.payload->Contained())
 		{
-			this.Target.base->RemoveObject();
-			return FX_Execute_Kill;
-		}
-		else if (!this.is_moving)
-		{
-			this.payload.Collectible = this.was_collectible;
-			this.Target.base->StartMoving(this.payload);
-			this.is_moving = true;
+			if (this.was_collectible != nil)
+			{
+				this.Target.Collectible = this.was_collectible;
+				this.was_collectible = nil;
+			}
+
+			if (!this.payload || this.payload->Contained())
+			{
+				this.Target.base->RemoveObject();
+				return FX_Execute_Kill;
+			}
+			else if (!this.is_moving)
+			{
+				this.Target.base->StartMoving(this.payload);
+				this.is_moving = true;
+			}
 		}
 		
 		if (this.payload)
@@ -74,7 +85,8 @@ local RetractEffect = new Effect
 	}
 };
 
-public func MoveToGrab(object target)
+// Grab a free object in the landscape or deliver a grabbed object.
+public func MoveTo(object target)
 {
 	this.target = target;
 	start_y = GetY();
@@ -90,6 +102,15 @@ public func OnMoveEnd()
 	Sound("Hits::Materials::Metal::DullMetalHit*", {pitch = 150});
 	var still_target = FindObject(Find_AtPoint(), Find_InArray([target]));
 		
-	var fx = CreateEffect(RetractEffect, 1, 1);
-	fx->SetPayload(still_target);
+	if (retract_fx)
+	{
+		if (still_target)
+			target->Collect(retract_fx.payload, true);
+		base->RemoveObject();
+	}
+	else
+	{
+		retract_fx = CreateEffect(RetractEffect, 1, 1);
+		retract_fx->SetPayload(still_target);
+	}
 }

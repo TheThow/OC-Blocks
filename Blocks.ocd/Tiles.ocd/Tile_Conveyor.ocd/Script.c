@@ -102,7 +102,7 @@ private func CheckObjects()
 private func BeginTransport(object obj, object target)
 {
 	var base = CreateObject(Tile_ConveyorArmBase, BoundBy(obj->GetX() - GetX(), -build_grid_x / 2, +build_grid_x / 2), 0, NO_OWNER);
-	base.hook->MoveToGrab(obj);
+	base.hook->MoveTo(obj);
 	base.home_block = this;
 	base.target = target;
 }

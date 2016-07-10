@@ -70,7 +70,7 @@ local MoveEffect = new Effect
 		{
 			if (this.current_target == this.final_target.conveyor_tile)
 			{
-				this.Target->RemoveObject();
+				this.Target.hook->MoveTo(this.final_target);
 				return FX_Execute_Kill;
 			}
 			this.last_target = this.current_block;
