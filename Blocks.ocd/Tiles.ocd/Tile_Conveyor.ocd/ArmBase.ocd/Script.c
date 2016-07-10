@@ -1,6 +1,6 @@
 public func SaveScenarioObject() { return false; }
 
-local home_block;
+local home_block, target; // start and destination
 local hook;
 local line;
 
@@ -91,8 +91,12 @@ local MoveEffect = new Effect
 public func StartMoving(object payload)
 {
 	if (!payload || !home_block) return;
+
+	// Check the predefined target or find a new one.
+	var target = this.target;
+	if (!target || target.conveyor_network != home_block.network)
+		target = home_block.network->DiscoverTarget(home_block, payload);
 	
-	var target = home_block.network->DiscoverTarget(home_block, payload);
 	if (!target)
 	{
 		ScheduleCall(this, "StartMoving", 30, nil, payload);

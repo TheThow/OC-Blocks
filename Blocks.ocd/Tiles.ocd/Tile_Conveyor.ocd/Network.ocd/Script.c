@@ -69,6 +69,7 @@ private func UpdateTargets()
 	}
 }
 
+// Find a target which wants to store a conveyor payload object.
 public func DiscoverTarget(object from, object payload)
 {
 	// Find the closest target which accepts our payload.
@@ -82,6 +83,24 @@ public func DiscoverTarget(object from, object payload)
 		}
 	}
 	return target;
+}
+
+// Request an object from the conveyor network, typically contained in another target object.
+// Returns true if delivery starts.
+public func RequestObject(object target, id payload)
+{
+	// Find the first target which can deliver the object.
+	for (var t in targets)
+	{
+		var obj = t->HasConveyorPayload(payload);
+		if (obj)
+		{
+			var tile = t.conveyor_tile;
+			tile->BeginTransport(obj, target);
+			return true;
+		}
+	}
+	return false;
 }
 
 func SaveScenarioObject(props)

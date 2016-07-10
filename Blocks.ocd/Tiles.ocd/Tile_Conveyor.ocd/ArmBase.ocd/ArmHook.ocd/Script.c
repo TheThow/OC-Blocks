@@ -35,6 +35,10 @@ local RetractEffect = new Effect
 		this.payload = payload;
 		this.payload_fx = payload->CreateEffect(Tile_ConveyorArmHook.RetractMarker, 1, 0);
 		payload->SetRDir();
+		// The hook also needs to be able to grab stuff from containers such as lorries.
+		payload->Exit();
+		this.was_collectible = payload.Collectible;
+		payload.Collectible = false;
 	},
 	
 	Stop = func()
@@ -57,6 +61,7 @@ local RetractEffect = new Effect
 		}
 		else if (!this.is_moving)
 		{
+			this.payload.Collectible = this.was_collectible;
 			this.Target.base->StartMoving(this.payload);
 			this.is_moving = true;
 		}

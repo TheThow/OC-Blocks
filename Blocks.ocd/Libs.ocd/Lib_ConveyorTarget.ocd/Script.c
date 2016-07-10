@@ -12,8 +12,19 @@ local conveyor_tile, conveyor_network;
 local IsConveyorTarget = true;
 public func IsConnectedToConveyor() { return conveyor_network != nil; }
 
-// Override me!
+/* Function to override */
+
+// Returns whether an object is accepted for storage.
 public func AcceptConveyorPayload(object payload) { return false; }
+
+// Returns an object to transport with the given id.
+// The default implementation looks at all contained objects.
+public func HasConveyorPayload(id payload)
+{
+	return FindObject(Find_Container(this), Find_ID(payload));
+}
+
+/* END functions to override */
 
 private func FindConveyor(int range)
 {

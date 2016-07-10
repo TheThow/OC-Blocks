@@ -98,11 +98,13 @@ private func CheckObjects()
 	BeginTransport(obj);
 }
 
-private func BeginTransport(object obj)
+// Start transporting an item, optionally with a destination object.
+private func BeginTransport(object obj, object target)
 {
 	var base = CreateObject(Tile_ConveyorArmBase, BoundBy(obj->GetX() - GetX(), -build_grid_x / 2, +build_grid_x / 2), 0, NO_OWNER);
 	base.hook->MoveToGrab(obj);
 	base.home_block = this;
+	base.target = target;
 }
 
 local Components = {Wood = 1};
