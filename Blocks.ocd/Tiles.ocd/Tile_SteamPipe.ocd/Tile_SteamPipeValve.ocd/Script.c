@@ -20,7 +20,7 @@ protected func Hit(x, y)
 	return true;
 }
 
-public func BuildingCondition()
+public func BuildingCondition(bool crucial)
 {
 	if (FindObject(Find_AtPoint(), Find_ID(GetID()), Find_Property("is_constructed"), Find_Exclude(this)))
 		return false;

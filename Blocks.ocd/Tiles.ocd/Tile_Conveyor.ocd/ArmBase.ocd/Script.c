@@ -93,11 +93,11 @@ public func StartMoving(object payload)
 	if (!payload || !home_block) return;
 
 	// Check the predefined target or find a new one.
-	var target = this.target;
-	if (!target || target.conveyor_network != home_block.network)
-		target = home_block.network->DiscoverTarget(home_block, payload);
+	var current_target = this.target;
+	if (!current_target || current_target.conveyor_network != home_block.network)
+		current_target = home_block.network->DiscoverTarget(home_block, payload);
 	
-	if (!target)
+	if (!current_target)
 	{
 		ScheduleCall(this, "StartMoving", 30, nil, payload);
 		return;
@@ -107,7 +107,7 @@ public func StartMoving(object payload)
 		this.line->RemoveObject();
 	
 	var fx = CreateEffect(MoveEffect, 1, 1);
-	fx.final_target = target;
+	fx.final_target = current_target;
 	fx.current_block = home_block;
 	fx.payload = payload;
 }

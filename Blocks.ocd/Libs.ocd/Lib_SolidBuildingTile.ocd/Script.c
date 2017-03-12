@@ -31,7 +31,7 @@ func Constructed()
 
 func CheckPlatforms()
 {
-	for (o in FindObjects(Find_Or(Find_AtPoint(-tile_size_x, 0), Find_AtPoint(tile_size_x, 0)), Find_Func("IsPlatformBuildingTile"), Find_NoContainer(), Find_Not(Find_Func("IsPreview"))))
+	for (var o in FindObjects(Find_Or(Find_AtPoint(-tile_size_x, 0), Find_AtPoint(tile_size_x, 0)), Find_Func("IsPlatformBuildingTile"), Find_NoContainer(), Find_Not(Find_Func("IsPreview"))))
 		o->AdjustSupport();
 }
 

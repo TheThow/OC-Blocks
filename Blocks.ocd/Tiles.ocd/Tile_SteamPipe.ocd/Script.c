@@ -24,7 +24,7 @@ local steam_particles;
 
 local pressure_valve;
 
-public func Definition()
+public func Definition(definition, ...)
 {
 	this.steam_particles = new Particles_Smoke()
 	{
@@ -35,7 +35,7 @@ public func Definition()
 		Alpha = PV_Linear(16, 0),
 		Rotation = PV_Random(360)
 	};
-	return _inherited();
+	return _inherited(definition, ...);
 }
 
 public func Construction()

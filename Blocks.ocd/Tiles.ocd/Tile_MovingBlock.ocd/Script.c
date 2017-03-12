@@ -16,7 +16,7 @@ public func IsRoot()
 	return root == this;
 }
 
-public func BuildingCondition()
+public func BuildingCondition(bool crucial)
 {
 	if (FindObject(Find_AtPoint(), Find_Property("is_constructed"),
 		Find_Not(Find_Or(Find_Func("IsWallBuildingTile"), Find_Func("IsPillarBuildingTile"), Find_Property("IsPipeBuildingTile"))),
