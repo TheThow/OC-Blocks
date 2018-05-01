@@ -175,9 +175,9 @@ public func SetDrawingColor(array props)
 	
 	particle = {
 		Size = 1,
-		R = rgba[0],
-		G = rgba[1],
-		B = rgba[2],
+		R = rgba.R,
+		G = rgba.G,
+		B = rgba.B,
 		Attach=ATTACH_Front,
 	};
 }
