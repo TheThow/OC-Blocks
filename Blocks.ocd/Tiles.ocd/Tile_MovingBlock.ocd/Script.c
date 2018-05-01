@@ -7,9 +7,13 @@ local Description = "$Description$";
 local Collectible = 1;
 local IsMovingBlockBuildingTile = true;
 
+local Components = {Metal = 1};
+
 local root = nil;
 local children;
 local moving_fx;
+
+public func IsToolProduct() { return true; }
 
 public func IsRoot()
 {
@@ -117,6 +121,3 @@ public func AddChild(object child)
 		PushBack(children, child);
 	else root->AddChild(child);
 }
-
-local Components = {Rock = 1};
-public func IsToolProduct() { return true; }

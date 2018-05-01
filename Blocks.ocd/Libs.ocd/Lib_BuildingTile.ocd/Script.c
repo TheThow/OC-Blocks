@@ -9,7 +9,7 @@
 #include Library_Stackable
 
 func MaxStackCount() { return 48; }
-func InitialStackCount() { return 4; }
+func InitialStackCount() { return 8; }
 
 local Name = "$Name$";
 local Description = "$Description$";

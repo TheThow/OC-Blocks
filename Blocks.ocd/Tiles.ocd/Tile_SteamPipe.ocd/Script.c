@@ -208,5 +208,5 @@ public func OnAddedNeighbour(string direction, object neighbour)
 		neighbour->CheckOpenOffset();
 }
 
-local Components = {Wood = 1};
+local Components = {Metal = 1};
 public func IsToolProduct() { return true; }

@@ -107,5 +107,5 @@ private func BeginTransport(object obj, object target)
 	base.target = target;
 }
 
-local Components = {Wood = 1};
+local Components = {Metal = 1};
 public func IsToolProduct() { return true; }
